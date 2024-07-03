@@ -1,7 +1,7 @@
 // popup.js
 
 window.onload = function() {
-    // 모달 엘리먼트
+    // 모달 엘리먼트 1
     const modal = document.getElementById('modal');
     const closeBtn = document.getElementsByClassName('close')[0];
 
