@@ -4,28 +4,28 @@
 import { ref, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 import { database } from "./firebase-config.js"; // firebase-config.js에서 export한 database 객체를 import
 
-// 정답 리스트 및 배점 설정 (1번부터 20번까지 100점이 되도록 배점 분배)
+// 정답 리스트 및 배점 설정
 const answerKey = [
-    { questionNumber: 1, score: 5 },
-    { questionNumber: 2, score: 5 },
-    { questionNumber: 3, score: 5 },
-    { questionNumber: 4, score: 5 },
-    { questionNumber: 5, score: 5 },
-    { questionNumber: 6, score: 5 },
-    { questionNumber: 7, score: 5 },
-    { questionNumber: 8, score: 5 },
-    { questionNumber: 9, score: 5 },
-    { questionNumber: 10, score: 5 },
-    { questionNumber: 11, score: 5 },
-    { questionNumber: 12, score: 5 },
-    { questionNumber: 13, score: 5 },
-    { questionNumber: 14, score: 5 },
-    { questionNumber: 15, score: 5 },
-    { questionNumber: 16, score: 5 },
-    { questionNumber: 17, score: 5 },
-    { questionNumber: 18, score: 5 },
-    { questionNumber: 19, score: 5 },
-    { questionNumber: 20, score: 5 }
+    { questionNumber: 1, correctAnswer: 1, score: 5 },
+    { questionNumber: 2, correctAnswer: 2, score: 5 },
+    { questionNumber: 3, correctAnswer: 3, score: 5 },
+    { questionNumber: 4, correctAnswer: 4, score: 5 },
+    { questionNumber: 5, correctAnswer: 5, score: 5 },
+    { questionNumber: 6, correctAnswer: 1, score: 5 },
+    { questionNumber: 7, correctAnswer: 2, score: 5 },
+    { questionNumber: 8, correctAnswer: 3, score: 5 },
+    { questionNumber: 9, correctAnswer: 4, score: 5 },
+    { questionNumber: 10, correctAnswer: 5, score: 5 },
+    { questionNumber: 11, correctAnswer: 1, score: 5 },
+    { questionNumber: 12, correctAnswer: 2, score: 5 },
+    { questionNumber: 13, correctAnswer: 3, score: 5 },
+    { questionNumber: 14, correctAnswer: 4, score: 5 },
+    { questionNumber: 15, correctAnswer: 5, score: 5 },
+    { questionNumber: 16, correctAnswer: 1, score: 5 },
+    { questionNumber: 17, correctAnswer: 2, score: 5 },
+    { questionNumber: 18, correctAnswer: 3, score: 5 },
+    { questionNumber: 19, correctAnswer: 4, score: 5 },
+    { questionNumber: 20, correctAnswer: 5, score: 5 }
 ];
 
 // 폼 제출 이벤트 핸들러
@@ -43,19 +43,33 @@ document.getElementById('grading-form').addEventListener('submit', function(even
 
     // 답안 배열 생성
     var answers = [
-        answers1to5.split('').map(Number),
-        answers6to10.split('').map(Number),
-        answers11to15.split('').map(Number),
-        answers16to20.split('').map(Number)
+        answers1to5.split(''),
+        answers6to10.split(''),
+        answers11to15.split(''),
+        answers16to20.split('')
     ];
 
     // 점수 계산
     var totalScore = 0;
     for (let i = 0; i < answerKey.length; i++) {
         let questionNumber = answerKey[i].questionNumber;
+        let correctAnswer = answerKey[i].correctAnswer;
         let score = answerKey[i].score;
-        let userAnswer = answers[Math.floor((questionNumber - 1) / 5)][(questionNumber - 1) % 5];
-        if (userAnswer === questionNumber) {
+        let userAnswer;
+        
+        // 각 문항에 따라 사용자의 답을 가져옴
+        if (questionNumber <= 5) {
+            userAnswer = answers[0][questionNumber - 1];
+        } else if (questionNumber <= 10) {
+            userAnswer = answers[1][questionNumber - 6];
+        } else if (questionNumber <= 15) {
+            userAnswer = answers[2][questionNumber - 11];
+        } else if (questionNumber <= 20) {
+            userAnswer = answers[3][questionNumber - 16];
+        }
+
+        // 사용자의 답이 정답과 일치하는지 확인하고 점수 계산
+        if (userAnswer && parseInt(userAnswer) === correctAnswer) {
             totalScore += score;
         }
     }
