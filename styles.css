@@ -11,10 +11,9 @@ html, body {
 body {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start; /* flex-start로 변경하여 페이지 상단에 맞춤 */
     background-color: #f4f4f9;
-    padding-top: 20px; /* 상단에 추가 여백을 주어 스크롤 여유 공간 확보 */
-    padding-bottom: 20px; /* 하단에 추가 여백을 주어 스크롤 여유 공간 확보 */
+    padding: 20px 0; /* 상단과 하단에 여백을 추가하여 스크롤 여유 공간 확보 */
 }
 
 .container {
@@ -24,7 +23,7 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-width: 600px;
     width: 100%;
-    margin-top: 40px; /* 상단 마진을 더 늘림 */
+    margin-top: 60px; /* 상단 마진을 더 늘림 */
 }
 
 h1 {
