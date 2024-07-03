@@ -1,4 +1,8 @@
-// submit-form.js
+// Import the functions you need from the Firebase SDKs
+import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+// Initialize Firebase database
+const database = getDatabase();
 
 // 폼 제출 이벤트 핸들러
 document.getElementById('grading-form').addEventListener('submit', function(event) {
@@ -13,7 +17,7 @@ document.getElementById('grading-form').addEventListener('submit', function(even
   var answers16to20 = document.getElementById('answers-16-20').value;
 
   // Firebase에 데이터 저장
-  database.ref('answers').push({
+  push(ref(database, 'answers'), {
     studentNumber: studentNumber,
     grade: grade,
     answers1to5: answers1to5,
