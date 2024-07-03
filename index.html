@@ -4,12 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>채점 사이트</title>
-    <link rel="stylesheet" href="styles.css"> <!-- 외부 CSS 파일 연결 -->
+    <!-- Firebase 설정 파일 추가 -->
+    <script src="firebase-config.js"></script>
+    <!-- Firebase 데이터베이스 스크립트 추가 -->
+    <script src="firebase-database.js"></script>
+    <!-- 별도로 작성한 JavaScript 파일 추가 -->
+    <script src="submit-form.js"></script>
+    <!-- 별도로 작성한 CSS 파일 추가 -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <h1>채점 사이트</h1>
-        <form>
+        <form id="grading-form">
             <!-- 학생 정보 입력 -->
             <label for="student-number">학번:</label>
             <input type="text" id="student-number" name="student-number" required>
