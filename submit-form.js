@@ -9,6 +9,7 @@ document.getElementById('grading-form').addEventListener('submit', function(even
   event.preventDefault(); // 폼이 실제로 전송되는 것을 막습니다.
 
   // 입력된 값 가져오기
+  var schoolName = document.getElementById('school-name').value;
   var studentNumber = document.getElementById('student-number').value;
   var grade = document.getElementById('grade').value;
   var answers1to5 = document.getElementById('answers-1-5').value;
@@ -47,6 +48,7 @@ document.getElementById('grading-form').addEventListener('submit', function(even
 
   // Firebase에 데이터 저장
   push(ref(database, 'answers'), {
+    schoolName: schoolName,
     studentNumber: studentNumber,
     grade: grade,
     answers1to5: answers1to5,
