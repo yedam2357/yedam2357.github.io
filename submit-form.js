@@ -16,6 +16,35 @@ document.getElementById('grading-form').addEventListener('submit', function(even
   var answers11to15 = document.getElementById('answers-11-15').value;
   var answers16to20 = document.getElementById('answers-16-20').value;
 
+  // 학번 형식 검증 함수
+  function validateStudentNumber(studentNumber) {
+    // 학번은 5자리여야 함
+    if (studentNumber.length !== 5) {
+      return false;
+    }
+
+    // 각 자리별 조건 검증
+    var A = parseInt(studentNumber.charAt(0), 10);
+    var B = parseInt(studentNumber.charAt(1), 10);
+    var C = parseInt(studentNumber.charAt(2), 10);
+    var D = parseInt(studentNumber.charAt(3), 10);
+    var E = parseInt(studentNumber.charAt(4), 10);
+
+    // 조건 검증
+    if (!(A >= 1 && A <= 3) || !(B === 0 || B === 1) || !(D >= 0 && D <= 2)) {
+      return false;
+    }
+
+    return true;
+  }
+
+  // 학번 검증
+  if (!validateStudentNumber(studentNumber)) {
+    // 조건을 만족하지 않으면 오류 메시지 표시 후 제출 막기
+    document.getElementById('submit-result').innerHTML = '<p>올바른 학번 형식이 아닙니다.</p>';
+    return;
+  }
+
   // Firebase에 데이터 저장
   push(ref(database, 'answers'), {
     studentNumber: studentNumber,
