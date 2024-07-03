@@ -1,24 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Information</title>
+    <title>채점 사이트</title>
 </head>
 <body>
-    <h1>물리 모의 테스트 채점</h1>
+    <h1>채점 사이트</h1>
     <form>
-        <label for="student-number">학번을 선택하시오:</label>
+        <!-- 학생 정보 입력 -->
+        <label for="student-number">학번:</label>
         <input type="text" id="student-number" name="student-number" required><br><br>
-        
-        <label for="grade">학년:</label>
+
+        <label for="grade">학년 선택:</label>
         <select id="grade" name="grade" required>
-            <option value="" disabled selected>학년을 선택하시오: </option>
-            <option value="1">1st Year</option>
-            <option value="2">2nd Year</option>
-            <option value="3">3rd Year</option>
+            <option value="" disabled selected>학년을 선택하세요</option>
+            <option value="1">1학년</option>
+            <option value="2">2학년</option>
+            <option value="3">3학년</option>
         </select><br><br>
-        
+
+        <!-- 문제 답 입력 -->
+        <h2>답안을 입력하세요:</h2>
+
+        <!-- 1번부터 5번까지 -->
+        <label for="answers-1-5">1번 - 5번:</label>
+        <input type="text" id="answers-1-5" name="answers-1-5" placeholder="12345" required><br><br>
+
+        <!-- 6번부터 10번까지 -->
+        <label for="answers-6-10">6번 - 10번:</label>
+        <input type="text" id="answers-6-10" name="answers-6-10" placeholder="12345" required><br><br>
+
+        <!-- 11번부터 15번까지 -->
+        <label for="answers-11-15">11번 - 15번:</label>
+        <input type="text" id="answers-11-15" name="answers-11-15" placeholder="12345" required><br><br>
+
+        <!-- 16번부터 20번까지 -->
+        <label for="answers-16-20">16번 - 20번:</label>
+        <input type="text" id="answers-16-20" name="answers-16-20" placeholder="12345" required><br><br>
+
         <input type="submit" value="제출">
     </form>
 </body>
