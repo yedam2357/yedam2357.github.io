@@ -1,14 +1,5 @@
-// Firebase 설정 및 초기화
-import { initializeApp } from "firebase/app";
-import { getDatabase, ref, push, get } from "firebase/database";
-
-const firebaseConfig = {
-  // Firebase 프로젝트 설정 정보
-};
-
-// Firebase 앱 초기화
-const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
+import { ref, push, get } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { database } from "./firebase-config.js"; 
 
 // 폼 제출 이벤트 핸들러
 document.getElementById('grading-form').addEventListener('submit', async function(event) {
