@@ -54,6 +54,7 @@ document.getElementById('grading-form').addEventListener('submit', async functio
   
           // 각 문제의 사용자 답안과 점수를 submissionData에 추가
           submissionData.answers.push({
+            correctAnswer: correctAnswer,
             userAnswer: userAnswer,
             score: score
           });
