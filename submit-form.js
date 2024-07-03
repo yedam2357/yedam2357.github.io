@@ -1,9 +1,8 @@
 // submit-form.js
 
 // Import the functions you need from the Firebase SDKs
-import { ref, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-import { database } from "./firebase-config.js"; // firebase-config.js에서 export한 database 객체를 import
-
+import { ref, push, get } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { database } from "./firebase-config.js"; 
 
 // 정답 리스트 및 배점 설정
 const answerKey = [
@@ -42,6 +41,13 @@ document.getElementById('grading-form').addEventListener('submit', function(even
   var answers11to15 = document.getElementById('answers-11-15').value.trim();
   var answers16to20 = document.getElementById('answers-16-20').value.trim();
 
+  // 정답 리스트 가져오기 함수
+  async function fetchAnswerList() {
+    const answersRef = ref(database, 'answer');
+    const snapshot = await get(answersRef); // get 함수 사용
+    return snapshot.val();
+  }
+
   // 학번 형식 검증 함수
   function validateStudentNumber(studentNumber) {
     // 학번은 5자리여야 함
@@ -71,59 +77,73 @@ document.getElementById('grading-form').addEventListener('submit', function(even
     return;
   }
 
+  async function gradeExam() {
+    try {
+      const answerList = await fetchAnswerList();
+      if (!answerList) {
+        throw new Error('정답 리스트를 가져올 수 없습니다.');
+      }
+
       // 답안 배열 생성
-  var answers = [
-    answers1to5.split(''),
-    answers6to10.split(''),
-    answers11to15.split(''),
-    answers16to20.split('')
-  ];
+      var answers = [
+        answers1to5.split(''),
+        answers6to10.split(''),
+        answers11to15.split(''),
+        answers16to20.split('')
+      ];
 
-// 사용자의 답안을 Firebase에 저장하기 위한 객체 생성
-  var userAnswers = {
-    answers1to5: answers[0],
-    answers6to10: answers[1],
-    answers11to15: answers[2],
-    answers16to20: answers[3]
-  };
+    // 사용자의 답안을 Firebase에 저장하기 위한 객체 생성
+      var userAnswers = {
+        answers1to5: answers[0],
+        answers6to10: answers[1],
+        answers11to15: answers[2],
+        answers16to20: answers[3]
+      };
 
-  // 점수 계산 및 정답 여부 판단
-  var totalScore = 0;
-  var results = []; // 각 문제의 결과를 저장할 배열
+      // 점수 계산 및 정답 여부 판단
+      var totalScore = 0;
+      var results = []; // 각 문제의 결과를 저장할 배열
 
-  for (let i = 0; i < answerKey.length; i++) {
-      let questionNumber = answerKey[i].questionNumber;
-      let correctAnswer = answerKey[i].correctAnswer;
-      let score = answerKey[i].score;
-      let userAnswer;
-      
-      // 각 문항에 따라 사용자의 답을 가져옴
-      if (questionNumber <= 5) {
-          userAnswer = answers[0][questionNumber - 1];
-      } else if (questionNumber <= 10) {
-          userAnswer = answers[1][questionNumber - 6];
-      } else if (questionNumber <= 15) {
-          userAnswer = answers[2][questionNumber - 11];
-      } else if (questionNumber <= 20) {
-          userAnswer = answers[3][questionNumber - 16];
+      for (let i = 0; i < answerKey.length; i++) {
+          let questionNumber = answerKey[i].questionNumber;
+          let correctAnswer = answerKey[i].correctAnswer;
+          let score = answerKey[i].score;
+          let userAnswer;
+          
+          // 각 문항에 따라 사용자의 답을 가져옴
+          if (questionNumber <= 5) {
+              userAnswer = answers[0][questionNumber - 1];
+          } else if (questionNumber <= 10) {
+              userAnswer = answers[1][questionNumber - 6];
+          } else if (questionNumber <= 15) {
+              userAnswer = answers[2][questionNumber - 11];
+          } else if (questionNumber <= 20) {
+              userAnswer = answers[3][questionNumber - 16];
+          }
+
+          // 사용자의 답이 정답과 일치하는지 확인하고 점수 계산
+          let isCorrect = userAnswer && parseInt(userAnswer) === correctAnswer;
+          if (isCorrect) {
+              totalScore += score;
+          }
+
+          // 결과를 배열에 저장
+          results.push({
+              questionNumber: questionNumber,
+              userAnswer: userAnswer,
+              correctAnswer: correctAnswer,
+              isCorrect: isCorrect,
+              score: isCorrect ? score : 0
+
+          });
       }
-
-      // 사용자의 답이 정답과 일치하는지 확인하고 점수 계산
-      let isCorrect = userAnswer && parseInt(userAnswer) === correctAnswer;
-      if (isCorrect) {
-          totalScore += score;
-      }
-
-      // 결과를 배열에 저장
-      results.push({
-          questionNumber: questionNumber,
-          userAnswer: userAnswer,
-          correctAnswer: correctAnswer,
-          isCorrect: isCorrect,
-          score: isCorrect ? score : 0
-
-      });
+    } catch (error) {
+      console.error('Error grading exam:', error);
+      document.getElementById('submit-result').innerHTML = '<p>채점 중 오류가 발생했습니다. 다시 시도해주세요.</p>';
+    }
   }
+
+  gradeExam();
 
   // Firebase에 데이터 저장
   push(ref(database, 'answers'), {
