@@ -106,6 +106,7 @@ document.getElementById('grading-form').addEventListener('submit', function(even
       var results = []; // 각 문제의 결과를 저장할 배열
 
       for (let i = 0; i < answerKey.length; i++) {
+          answerKey[i].correctAnswer = answerList[i].correctAnswer;
           let questionNumber = answerKey[i].questionNumber;
           let correctAnswer = answerKey[i].correctAnswer;
           let score = answerKey[i].score;
