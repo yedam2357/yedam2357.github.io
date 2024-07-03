@@ -77,6 +77,8 @@ document.getElementById('grading-form').addEventListener('submit', function(even
     return;
   }
 
+  var totalScore = 0;
+
   async function gradeExam() {
     try {
       const answerList = await fetchAnswerList();
@@ -101,7 +103,6 @@ document.getElementById('grading-form').addEventListener('submit', function(even
       };
 
       // 점수 계산 및 정답 여부 판단
-      var totalScore = 0;
       var results = []; // 각 문제의 결과를 저장할 배열
 
       for (let i = 0; i < answerKey.length; i++) {
@@ -137,6 +138,8 @@ document.getElementById('grading-form').addEventListener('submit', function(even
 
           });
       }
+
+      
     } catch (error) {
       console.error('Error grading exam:', error);
       document.getElementById('submit-result').innerHTML = '<p>채점 중 오류가 발생했습니다. 다시 시도해주세요.</p>';
