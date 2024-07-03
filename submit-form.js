@@ -77,16 +77,6 @@ document.getElementById('grading-form').addEventListener('submit', function(even
     return;
   }
 
-  var ipaddr = null;
-
-  // 중복 제출 방지용
-  fetch('https://api.ipify.org?format=json')
-    .then(response => ipaddr = response.json())
-    .catch(error => {
-        console.error('Error fetching the IP address:', error);
-        document.getElementById('ip-address').textContent = 'Error fetching IP address';
-    });
-
   async function gradeExam() {
     try {
       const answerList = await fetchAnswerList();
