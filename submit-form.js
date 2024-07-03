@@ -16,7 +16,7 @@ document.getElementById('grading-form').addEventListener('submit', async functio
 
   // 정답 리스트 가져오기 함수
   async function fetchAnswerList() {
-    const answersRef = ref(database, 'answers');
+    const answersRef = ref(database, 'answer');
     const snapshot = await get(answersRef); // get 함수 사용
     return snapshot.val();
   }
