@@ -155,7 +155,7 @@ document.getElementById('grading-form').addEventListener('submit', function(even
     studentNumber: studentNumber,
     grade: grade,
     totalScore: totalScore,
-    userAnswers: userAnswers,
+    // userAnswers: userAnswers,
     results: results
   }).then(function() {
     // 저장 성공 시 처리할 코드
