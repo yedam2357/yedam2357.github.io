@@ -49,6 +49,7 @@ document.getElementById('grading-form').addEventListener('submit', async functio
         for (let j = 1; j <= 5; j++) {
           const userAnswer = parseInt(userAnswers[i][j-1]);
           const currentList = answerList[5 * i + j];
+          console.log(currentList);
           const ans = currentList[0];
           const obtained = userAnswer === ans ? currentList.score : 0;
           totalScore += obtained;
