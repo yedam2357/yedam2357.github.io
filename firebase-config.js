@@ -18,6 +18,6 @@ const firebaseConfig = {
   measurementId: "G-TFF1H0SFXE"
 };
 
-// Initialize Firebase
+// Firebase 초기화
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
