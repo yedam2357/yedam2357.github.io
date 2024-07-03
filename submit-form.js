@@ -157,7 +157,7 @@ document.getElementById('grading-form').addEventListener('submit', function(even
         // userAnswers: userAnswers,
       }).then(function() {
         // 저장 성공 시 처리할 코드
-        document.getElementById('submit-result').innerHTML = '<p>답안이 성공적으로 저장되었습니다. (총 점수: ${totalScore})</p>';
+        document.getElementById('submit-result').innerHTML = `<p>답안이 성공적으로 저장되었습니다. (총 점수: ${totalScore})</p>`;
         // 폼 초기화 혹은 다음 작업 처리
         document.getElementById('grading-form').reset();
       }).catch(function(error) {
