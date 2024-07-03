@@ -2,7 +2,8 @@
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+import { getDatabase } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -15,9 +16,12 @@ const firebaseConfig = {
   storageBucket: "test-67eeb.appspot.com",
   messagingSenderId: "157964586912",
   appId: "1:157964586912:web:7b2926cd3bb1b152811ec5",
-  measurementId: "G-TFF1H0SFXE"
+  measurementId: "G-TFF1H0SFXE",
+  databaseURL: "https://test-67eeb-default-rtdb.firebaseio.com"
 };
 
 // Firebase 초기화
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const database = getDatabase(app);
+
+export { database };
