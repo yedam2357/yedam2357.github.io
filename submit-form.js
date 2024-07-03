@@ -46,17 +46,18 @@ document.getElementById('grading-form').addEventListener('submit', async functio
       };
 
       for (let i = 0; i < userAnswers.length; i++) {
-        const userAnswer = parseInt(userAnswers[i]);
-        const correctAnswer = answerList[i].correctAnswer;
-        const score = userAnswer === correctAnswer ? answerList[i].score : 0;
-        totalScore += score;
-
-        // 각 문제의 사용자 답안과 점수를 submissionData에 추가
-        submissionData.answers.push({
-          questionNumber: i + 1,
-          userAnswer: userAnswer,
-          score: score
-        });
+        for (let j = 0; j < 5; j++) {
+          const userAnswer = parseInt(userAnswers[i][j]);
+          const correctAnswer = answerList[i].correctAnswer;
+          const score = userAnswer === correctAnswer ? answerList[i].score : 0;
+          totalScore += score;
+  
+          // 각 문제의 사용자 답안과 점수를 submissionData에 추가
+          submissionData.answers.push({
+            userAnswer: userAnswer,
+            score: score
+          });
+        }
       }
 
       submissionData.totalScore = totalScore;
