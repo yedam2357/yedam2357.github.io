@@ -13,6 +13,8 @@ body {
     justify-content: center;
     align-items: center;
     background-color: #f4f4f9;
+    padding-top: 20px; /* 상단에 추가 여백을 주어 스크롤 여유 공간 확보 */
+    padding-bottom: 20px; /* 하단에 추가 여백을 주어 스크롤 여유 공간 확보 */
 }
 
 .container {
@@ -22,7 +24,7 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-width: 600px;
     width: 100%;
-    margin-top: 20px; /* 상단 마진 추가 */
+    margin-top: 40px; /* 상단 마진을 더 늘림 */
 }
 
 h1 {
