@@ -25,6 +25,7 @@ document.getElementById('grading-form').addEventListener('submit', async functio
   async function gradeExam() {
     try {
       const answerList = await fetchAnswerList();
+      console.log(answerList);
       if (!answerList) {
         throw new Error('정답 리스트를 가져올 수 없습니다.');
       }
