@@ -22,11 +22,12 @@ document.getElementById('grading-form').addEventListener('submit', function(even
     answers16to20: answers16to20
   }).then(function() {
     // 저장 성공 시 처리할 코드
-    alert('답안이 성공적으로 저장되었습니다.');
+    document.getElementById('submit-result').innerHTML = '<p>답안이 성공적으로 저장되었습니다.</p>';
     // 폼 초기화 혹은 다음 작업 처리
+    document.getElementById('grading-form').reset();
   }).catch(function(error) {
     // 저장 실패 시 처리할 코드
     console.error('저장 중 오류 발생:', error);
-    alert('저장 중 오류가 발생했습니다.');
+    document.getElementById('submit-result').innerHTML = '<p>저장 중 오류가 발생했습니다. 다시 시도해주세요.</p>';
   });
 });
