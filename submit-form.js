@@ -4,30 +4,6 @@
 import { ref, push, get } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 import { database } from "./firebase-config.js"; 
 
-// 정답 리스트 및 배점 설정
-const answerKey = [
-  { questionNumber: 1, correctAnswer: 1, score: 5 },
-  { questionNumber: 2, correctAnswer: 2, score: 5 },
-  { questionNumber: 3, correctAnswer: 3, score: 5 },
-  { questionNumber: 4, correctAnswer: 4, score: 5 },
-  { questionNumber: 5, correctAnswer: 5, score: 5 },
-  { questionNumber: 6, correctAnswer: 1, score: 5 },
-  { questionNumber: 7, correctAnswer: 2, score: 5 },
-  { questionNumber: 8, correctAnswer: 3, score: 5 },
-  { questionNumber: 9, correctAnswer: 4, score: 5 },
-  { questionNumber: 10, correctAnswer: 5, score: 5 },
-  { questionNumber: 11, correctAnswer: 1, score: 5 },
-  { questionNumber: 12, correctAnswer: 2, score: 5 },
-  { questionNumber: 13, correctAnswer: 3, score: 5 },
-  { questionNumber: 14, correctAnswer: 4, score: 5 },
-  { questionNumber: 15, correctAnswer: 5, score: 5 },
-  { questionNumber: 16, correctAnswer: 1, score: 5 },
-  { questionNumber: 17, correctAnswer: 2, score: 5 },
-  { questionNumber: 18, correctAnswer: 3, score: 5 },
-  { questionNumber: 19, correctAnswer: 4, score: 5 },
-  { questionNumber: 20, correctAnswer: 5, score: 5 }
-];
-
 // 폼 제출 이벤트 핸들러
 document.getElementById('grading-form').addEventListener('submit', function(event) {
   event.preventDefault(); // 폼이 실제로 전송되는 것을 막습니다.
@@ -76,6 +52,16 @@ document.getElementById('grading-form').addEventListener('submit', function(even
     document.getElementById('submit-result').innerHTML = '<p>올바른 학번 형식이 아닙니다.</p>';
     return;
   }
+
+  var ipaddr = null;
+
+  // 중복 제출 방지용
+  fetch('https://api.ipify.org?format=json')
+    .then(response => ipaddr = response.json())
+    .catch(error => {
+        console.error('Error fetching the IP address:', error);
+        document.getElementById('ip-address').textContent = 'Error fetching IP address';
+    });
 
   async function gradeExam() {
     try {
