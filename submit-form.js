@@ -1,8 +1,8 @@
-// Import the functions you need from the Firebase SDKs
-import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+// submit-form.js
 
-// Initialize Firebase database
-const database = getDatabase();
+// Import the functions you need from the Firebase SDKs
+import { ref, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { database } from "./firebase-config.js"; // firebase-config.js에서 export한 database 객체를 import
 
 // 폼 제출 이벤트 핸들러
 document.getElementById('grading-form').addEventListener('submit', function(event) {
