@@ -151,6 +151,9 @@ document.getElementById('grading-form').addEventListener('submit', function(even
 
   gradeExam();
 
+  console.log(totalScore);
+  console.log(results);
+
   // Firebase에 데이터 저장
   push(ref(database, 'answers'), {
     schoolName: schoolName,
