@@ -18,7 +18,7 @@ body {
 
 .container {
     background-color: #ffffff;
-    padding: 20px;
+    padding: 10px 20px; /* 상단 10px, 하단 20px 패딩 설정 */
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-width: 600px;
@@ -78,6 +78,7 @@ input[type="submit"]:hover {
 @media (max-width: 600px) {
     .container {
         margin-top: 20px; /* 작은 화면에서 더 작은 상단 마진 적용 */
+        padding: 10px; /* 작은 화면에서 패딩을 줄임 */
     }
     h1 {
         font-size: 20px; /* 작은 화면에서 더 작은 글자 크기 적용 */
