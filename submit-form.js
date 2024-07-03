@@ -1,7 +1,7 @@
-// submit-form.js
+  // submit-form.js
 
 // Import the functions you need from the Firebase SDKs
-import { ref, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { ref, push, get } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 import { database } from "./firebase-config.js"; // firebase-config.js에서 export한 database 객체를 import
 
 // 폼 제출 이벤트 핸들러
