@@ -77,15 +77,15 @@ document.getElementById('grading-form').addEventListener('submit', function(even
     return;
   }
 
-  var totalScore = 0;      
-  var results = []; // 각 문제의 결과를 저장할 배열
-
   async function gradeExam() {
     try {
       const answerList = await fetchAnswerList();
       if (!answerList) {
         throw new Error('정답 리스트를 가져올 수 없습니다.');
       }
+
+      var totalScore = 0;      
+      var results = []; // 각 문제의 결과를 저장할 배열
 
       // 답안 배열 생성
       var answers = [
@@ -143,33 +143,28 @@ document.getElementById('grading-form').addEventListener('submit', function(even
         console.log(results);
 
       }
+
+      // Firebase에 데이터 저장
+      push(ref(database, 'submissions'), {
+        schoolName: schoolName,
+        studentNumber: studentNumber,
+        grade: grade,
+        totalScore: totalScore,
+        // userAnswers: userAnswers,
+        results: results
+      }).then(function() {
+        // 저장 성공 시 처리할 코드
+        document.getElementById('submit-result').innerHTML = '<p>답안이 성공적으로 저장되었습니다. (총 점수: ${totalScore})</p>';
+        // 폼 초기화 혹은 다음 작업 처리
+        document.getElementById('grading-form').reset();
+      }).catch(function(error) {
+        // 저장 실패 시 처리할 코드
+        console.error('저장 중 오류 발생:', error);
+        document.getElementById('submit-result').innerHTML = '<p>저장 중 오류가 발생했습니다. 다시 시도해주세요.</p>';
+      });
     } catch (error) {
       console.error('Error grading exam:', error);
       document.getElementById('submit-result').innerHTML = '<p>채점 중 오류가 발생했습니다. 다시 시도해주세요.</p>';
     }
   }
-
-  gradeExam();
-
-  console.log(totalScore);
-  console.log(results);
-
-  // Firebase에 데이터 저장
-  push(ref(database, 'answers'), {
-    schoolName: schoolName,
-    studentNumber: studentNumber,
-    grade: grade,
-    totalScore: totalScore,
-    // userAnswers: userAnswers,
-    results: results
-  }).then(function() {
-    // 저장 성공 시 처리할 코드
-    document.getElementById('submit-result').innerHTML = '<p>답안이 성공적으로 저장되었습니다. (총 점수: ${totalScore})</p>';
-    // 폼 초기화 혹은 다음 작업 처리
-    document.getElementById('grading-form').reset();
-  }).catch(function(error) {
-    // 저장 실패 시 처리할 코드
-    console.error('저장 중 오류 발생:', error);
-    document.getElementById('submit-result').innerHTML = '<p>저장 중 오류가 발생했습니다. 다시 시도해주세요.</p>';
-  });
 });
