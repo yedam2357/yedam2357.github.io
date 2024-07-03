@@ -106,41 +106,43 @@ document.getElementById('grading-form').addEventListener('submit', function(even
       // 점수 계산 및 정답 여부 판단
 
       for (let i = 0; i < answerKey.length; i++) {
-          answerKey[i].correctAnswer = answerList[i].correctAnswer;
-          let questionNumber = answerKey[i].questionNumber;
-          let correctAnswer = answerKey[i].correctAnswer;
-          let score = answerKey[i].score;
-          let userAnswer;
-          
-          // 각 문항에 따라 사용자의 답을 가져옴
-          if (questionNumber <= 5) {
-              userAnswer = answers[0][questionNumber - 1];
-          } else if (questionNumber <= 10) {
-              userAnswer = answers[1][questionNumber - 6];
-          } else if (questionNumber <= 15) {
-              userAnswer = answers[2][questionNumber - 11];
-          } else if (questionNumber <= 20) {
-              userAnswer = answers[3][questionNumber - 16];
-          }
+        answerKey[i].correctAnswer = answerList[i].correctAnswer;
+        let questionNumber = answerKey[i].questionNumber;
+        let correctAnswer = answerKey[i].correctAnswer;
+        let score = answerKey[i].score;
+        let userAnswer;
+        
+        // 각 문항에 따라 사용자의 답을 가져옴
+        if (questionNumber <= 5) {
+            userAnswer = answers[0][questionNumber - 1];
+        } else if (questionNumber <= 10) {
+            userAnswer = answers[1][questionNumber - 6];
+        } else if (questionNumber <= 15) {
+            userAnswer = answers[2][questionNumber - 11];
+        } else if (questionNumber <= 20) {
+            userAnswer = answers[3][questionNumber - 16];
+        }
 
-          // 사용자의 답이 정답과 일치하는지 확인하고 점수 계산
-          let isCorrect = userAnswer && parseInt(userAnswer) === correctAnswer;
-          if (isCorrect) {
-              totalScore += score;
-          }
+        // 사용자의 답이 정답과 일치하는지 확인하고 점수 계산
+        let isCorrect = userAnswer && parseInt(userAnswer) === correctAnswer;
+        if (isCorrect) {
+            totalScore += score;
+        }
 
-          // 결과를 배열에 저장
-          results.push({
-              questionNumber: questionNumber,
-              userAnswer: userAnswer,
-              correctAnswer: correctAnswer,
-              isCorrect: isCorrect,
-              score: isCorrect ? score : 0
+        // 결과를 배열에 저장
+        results.push({
+            questionNumber: questionNumber,
+            userAnswer: userAnswer,
+            correctAnswer: correctAnswer,
+            isCorrect: isCorrect,
+            score: isCorrect ? score : 0
 
-          });
+        });
+
+        console.log(totalScore);
+        console.log(results);
+
       }
-
-      
     } catch (error) {
       console.error('Error grading exam:', error);
       document.getElementById('submit-result').innerHTML = '<p>채점 중 오류가 발생했습니다. 다시 시도해주세요.</p>';
