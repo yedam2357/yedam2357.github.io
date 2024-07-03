@@ -36,6 +36,7 @@ document.getElementById('grading-form').addEventListener('submit', function(even
   var schoolName = document.getElementById('school-name').value || '천천고등학교'; // 학교 이름 기본값 설정
   var studentNumber = document.getElementById('student-number').value;
   var grade = document.getElementById('grade').value;
+  var contact = document.getElementById('contact').value;
   var answers1to5 = document.getElementById('answers-1-5').value.trim();
   var answers6to10 = document.getElementById('answers-6-10').value.trim();
   var answers11to15 = document.getElementById('answers-11-15').value.trim();
@@ -151,6 +152,7 @@ document.getElementById('grading-form').addEventListener('submit', function(even
         schoolName: schoolName,
         studentNumber: studentNumber,
         grade: grade,
+        contact: contact,
         totalScore: totalScore,     
         timeStamp: currentTimeString,
         results: results
