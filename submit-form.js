@@ -48,15 +48,10 @@ document.getElementById('grading-form').addEventListener('submit', async functio
       for (let i = 0; i < userAnswers.length; i++) {
         for (let j = 1; j <= 5; j++) {
           const userAnswer = parseInt(userAnswers[i][j-1]);
-          const currentList = answerList[5 * i + j];
-          console.log(currentList);
-          const ans = currentList[0];
-          const obtained = userAnswer === ans ? currentList.score : 0;
-          totalScore += obtained;
   
           // 각 문제의 사용자 답안과 점수를 submissionData에 추가
           submissionData.answers.push({
-            correctAnswer: ans,
+            correctAnswer: j,
             userAnswer: userAnswer,
             score: obtained
           });
