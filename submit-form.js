@@ -8,6 +8,7 @@ document.getElementById('grading-form').addEventListener('submit', async functio
   // 입력된 값 가져오기
   const studentNumber = document.getElementById('student-number').value;
   const grade = document.getElementById('grade').value;
+  const schoolName = document.getElementById('school-name').value;
   const answers1to5 = document.getElementById('answers-1-5').value;
   const answers6to10 = document.getElementById('answers-6-10').value;
   const answers11to15 = document.getElementById('answers-11-15').value;
@@ -15,7 +16,7 @@ document.getElementById('grading-form').addEventListener('submit', async functio
 
   // 정답 리스트 가져오기 함수
   async function fetchAnswerList() {
-    const answersRef = ref(database, 'answer');
+    const answersRef = ref(database, 'answers');
     const snapshot = await get(answersRef); // get 함수 사용
     return snapshot.val();
   }
@@ -38,6 +39,7 @@ document.getElementById('grading-form').addEventListener('submit', async functio
       const submissionData = {
         studentNumber: studentNumber,
         grade: grade,
+        schoolName: schoolName,
         answers: [],
         totalScore: 0,
         timestamp: new Date().toISOString()
