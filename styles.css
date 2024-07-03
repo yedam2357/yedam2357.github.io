@@ -67,6 +67,8 @@ input[type="submit"]:hover {
 #submit-result {
     text-align: center;
     margin-top: 20px;
+    font-size: 16px; /* 텍스트 크기 조정 */
+    color: #d32f2f; /* 오류 메시지 색상 지정 */
 }
 
 .section-label {
@@ -96,6 +98,8 @@ input[type="submit"]:hover {
     max-width: 500px;
     border-radius: 8px;
     text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 모달 그림자 추가 */
+    animation: fadeIn 0.3s ease; /* 모달 팝업 애니메이션 */
 }
 
 .close {
@@ -110,6 +114,12 @@ input[type="submit"]:hover {
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+/* 모달 팝업 애니메이션 */
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
 }
 
 /* 반응형 디자인을 위한 @media 쿼리 */
