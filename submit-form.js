@@ -49,8 +49,18 @@ document.getElementById('grading-form').addEventListener('submit', function(even
         answers16to20.split('')
     ];
 
-    // 점수 계산
+    // 사용자의 답안을 Firebase에 저장하기 위한 객체 생성
+    var userAnswers = {
+        answers1to5: answers[0],
+        answers6to10: answers[1],
+        answers11to15: answers[2],
+        answers16to20: answers[3]
+    };
+
+    // 점수 계산 및 정답 여부 판단
     var totalScore = 0;
+    var results = []; // 각 문제의 결과를 저장할 배열
+
     for (let i = 0; i < answerKey.length; i++) {
         let questionNumber = answerKey[i].questionNumber;
         let correctAnswer = answerKey[i].correctAnswer;
@@ -69,9 +79,19 @@ document.getElementById('grading-form').addEventListener('submit', function(even
         }
 
         // 사용자의 답이 정답과 일치하는지 확인하고 점수 계산
-        if (userAnswer && parseInt(userAnswer) === correctAnswer) {
+        let isCorrect = userAnswer && parseInt(userAnswer) === correctAnswer;
+        if (isCorrect) {
             totalScore += score;
         }
+
+        // 결과를 배열에 저장
+        results.push({
+            questionNumber: questionNumber,
+            userAnswer: userAnswer,
+            correctAnswer: correctAnswer,
+            isCorrect: isCorrect,
+            score: isCorrect ? score : 0
+        });
     }
 
     // Firebase에 데이터 저장
@@ -79,7 +99,9 @@ document.getElementById('grading-form').addEventListener('submit', function(even
         schoolName: schoolName,
         studentNumber: studentNumber,
         grade: grade,
-        totalScore: totalScore
+        totalScore: totalScore,
+        userAnswers: userAnswers,
+        results: results
     }).then(function() {
         // 저장 성공 시 처리할 코드
         document.getElementById('submit-result').innerHTML = '<p>총 점수: ' + totalScore + '점</p>';
