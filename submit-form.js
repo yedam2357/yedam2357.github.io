@@ -138,10 +138,6 @@ document.getElementById('grading-form').addEventListener('submit', function(even
             score: isCorrect ? score : 0
 
         });
-
-        console.log(totalScore);
-        console.log(results);
-
       }
 
       // Firebase에 데이터 저장
