@@ -4,6 +4,31 @@
 import { ref, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 import { database } from "./firebase-config.js"; // firebase-config.js에서 export한 database 객체를 import
 
+
+// 정답 리스트 및 배점 설정
+const answerKey = [
+  { questionNumber: 1, correctAnswer: 1, score: 5 },
+  { questionNumber: 2, correctAnswer: 2, score: 5 },
+  { questionNumber: 3, correctAnswer: 3, score: 5 },
+  { questionNumber: 4, correctAnswer: 4, score: 5 },
+  { questionNumber: 5, correctAnswer: 5, score: 5 },
+  { questionNumber: 6, correctAnswer: 1, score: 5 },
+  { questionNumber: 7, correctAnswer: 2, score: 5 },
+  { questionNumber: 8, correctAnswer: 3, score: 5 },
+  { questionNumber: 9, correctAnswer: 4, score: 5 },
+  { questionNumber: 10, correctAnswer: 5, score: 5 },
+  { questionNumber: 11, correctAnswer: 1, score: 5 },
+  { questionNumber: 12, correctAnswer: 2, score: 5 },
+  { questionNumber: 13, correctAnswer: 3, score: 5 },
+  { questionNumber: 14, correctAnswer: 4, score: 5 },
+  { questionNumber: 15, correctAnswer: 5, score: 5 },
+  { questionNumber: 16, correctAnswer: 1, score: 5 },
+  { questionNumber: 17, correctAnswer: 2, score: 5 },
+  { questionNumber: 18, correctAnswer: 3, score: 5 },
+  { questionNumber: 19, correctAnswer: 4, score: 5 },
+  { questionNumber: 20, correctAnswer: 5, score: 5 }
+];
+
 // 폼 제출 이벤트 핸들러
 document.getElementById('grading-form').addEventListener('submit', function(event) {
   event.preventDefault(); // 폼이 실제로 전송되는 것을 막습니다.
@@ -12,10 +37,10 @@ document.getElementById('grading-form').addEventListener('submit', function(even
   var schoolName = document.getElementById('school-name').value || '천천고등학교'; // 학교 이름 기본값 설정
   var studentNumber = document.getElementById('student-number').value;
   var grade = document.getElementById('grade').value;
-  var answers1to5 = document.getElementById('answers-1-5').value;
-  var answers6to10 = document.getElementById('answers-6-10').value;
-  var answers11to15 = document.getElementById('answers-11-15').value;
-  var answers16to20 = document.getElementById('answers-16-20').value;
+  var answers1to5 = document.getElementById('answers-1-5').value.trim();
+  var answers6to10 = document.getElementById('answers-6-10').value.trim();
+  var answers11to15 = document.getElementById('answers-11-15').value.trim();
+  var answers16to20 = document.getElementById('answers-16-20').value.trim();
 
   // 학번 형식 검증 함수
   function validateStudentNumber(studentNumber) {
@@ -46,6 +71,60 @@ document.getElementById('grading-form').addEventListener('submit', function(even
     return;
   }
 
+      // 답안 배열 생성
+  var answers = [
+    answers1to5.split(''),
+    answers6to10.split(''),
+    answers11to15.split(''),
+    answers16to20.split('')
+  ];
+
+// 사용자의 답안을 Firebase에 저장하기 위한 객체 생성
+  var userAnswers = {
+    answers1to5: answers[0],
+    answers6to10: answers[1],
+    answers11to15: answers[2],
+    answers16to20: answers[3]
+  };
+
+  // 점수 계산 및 정답 여부 판단
+  var totalScore = 0;
+  var results = []; // 각 문제의 결과를 저장할 배열
+
+  for (let i = 0; i < answerKey.length; i++) {
+      let questionNumber = answerKey[i].questionNumber;
+      let correctAnswer = answerKey[i].correctAnswer;
+      let score = answerKey[i].score;
+      let userAnswer;
+      
+      // 각 문항에 따라 사용자의 답을 가져옴
+      if (questionNumber <= 5) {
+          userAnswer = answers[0][questionNumber - 1];
+      } else if (questionNumber <= 10) {
+          userAnswer = answers[1][questionNumber - 6];
+      } else if (questionNumber <= 15) {
+          userAnswer = answers[2][questionNumber - 11];
+      } else if (questionNumber <= 20) {
+          userAnswer = answers[3][questionNumber - 16];
+      }
+
+      // 사용자의 답이 정답과 일치하는지 확인하고 점수 계산
+      let isCorrect = userAnswer && parseInt(userAnswer) === correctAnswer;
+      if (isCorrect) {
+          totalScore += score;
+      }
+
+      // 결과를 배열에 저장
+      results.push({
+          questionNumber: questionNumber,
+          userAnswer: userAnswer,
+          correctAnswer: correctAnswer,
+          isCorrect: isCorrect,
+          score: isCorrect ? score : 0
+
+      });
+  }
+
   // Firebase에 데이터 저장
   push(ref(database, 'answers'), {
     schoolName: schoolName,
@@ -54,7 +133,10 @@ document.getElementById('grading-form').addEventListener('submit', function(even
     answers1to5: answers1to5,
     answers6to10: answers6to10,
     answers11to15: answers11to15,
-    answers16to20: answers16to20
+    answers16to20: answers16to20,
+    totalScore: totalScore,
+    userAnswers: userAnswers,
+    results: results
   }).then(function() {
     // 저장 성공 시 처리할 코드
     document.getElementById('submit-result').innerHTML = '<p>답안이 성공적으로 저장되었습니다.</p>';
