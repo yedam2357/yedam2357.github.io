@@ -25,7 +25,6 @@ document.getElementById('grading-form').addEventListener('submit', async functio
   async function gradeExam() {
     try {
       const answerList = await fetchAnswerList();
-      console.log(answerList);
       if (!answerList) {
         throw new Error('정답 리스트를 가져올 수 없습니다.');
       }
@@ -49,6 +48,7 @@ document.getElementById('grading-form').addEventListener('submit', async functio
       for (let i = 0; i < userAnswers.length; i++) {
         for (let j = 1; j <= 5; j++) {
           const userAnswer = parseInt(userAnswers[i][j-1]);
+          console.log(answerList[5 * i + j]);
           const correctAnswer = answerList[5 * i + j].correctAnswer;
           const score = userAnswer === correctAnswer ? answerList[5 * i + j].score : 0;
           totalScore += score;
