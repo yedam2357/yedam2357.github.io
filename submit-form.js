@@ -1,8 +1,14 @@
-  // submit-form.js
+// Firebase 설정 및 초기화
+import { initializeApp } from "firebase/app";
+import { getDatabase, ref, push, get } from "firebase/database";
 
-// Import the functions you need from the Firebase SDKs
-import { ref, push, get } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-import { database } from "./firebase-config.js"; // firebase-config.js에서 export한 database 객체를 import
+const firebaseConfig = {
+  // Firebase 프로젝트 설정 정보
+};
+
+// Firebase 앱 초기화
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
 
 // 폼 제출 이벤트 핸들러
 document.getElementById('grading-form').addEventListener('submit', async function(event) {
@@ -19,7 +25,7 @@ document.getElementById('grading-form').addEventListener('submit', async functio
   // 정답 리스트 가져오기 함수
   async function fetchAnswerList() {
     const answersRef = ref(database, 'answer');
-    const snapshot = await get(answersRef);
+    const snapshot = await get(answersRef); // get 함수 사용
     return snapshot.val();
   }
 
@@ -27,6 +33,10 @@ document.getElementById('grading-form').addEventListener('submit', async functio
   async function gradeExam() {
     try {
       const answerList = await fetchAnswerList();
+      if (!answerList) {
+        throw new Error('정답 리스트를 가져올 수 없습니다.');
+      }
+
       let totalScore = 0;
 
       // 사용자 답안과 정답 비교 및 점수 계산
@@ -80,4 +90,3 @@ document.getElementById('grading-form').addEventListener('submit', async functio
   // 채점 함수 호출
   gradeExam();
 });
-
