@@ -107,9 +107,9 @@ document.getElementById('grading-form').addEventListener('submit', function(even
 
       for (let i = 0; i < answerKey.length; i++) {
         //answerKey[i].correctAnswer = answerList[i].correctAnswer;
-        let questionNumber = answerList[i].correctAnswer;
-        let correctAnswer = answerKey[i].correctAnswer;
-        let score = answerKey[i].score;
+        let questionNumber = answerList[i].questionNumber;
+        let correctAnswer = answerList[i].correctAnswer;
+        let score = answerList[i].score;
         let userAnswer;
         
         // 각 문항에 따라 사용자의 답을 가져옴
