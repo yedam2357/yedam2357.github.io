@@ -1,14 +1,8 @@
 // firebase-config.js
 
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getDatabase } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyCBUr426b4ZjegpcJ6-gvtirjI-TdsrZ7Y",
   authDomain: "test-67eeb.firebaseapp.com",
@@ -20,7 +14,6 @@ const firebaseConfig = {
   databaseURL: "https://test-67eeb-default-rtdb.firebaseio.com"
 };
 
-// Firebase 초기화
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
